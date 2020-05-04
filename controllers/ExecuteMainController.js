@@ -1,4 +1,3 @@
-let { configconnection, security } = require('../config.js');
 var fs = require("fs");
 const sql = require('mssql');
 
