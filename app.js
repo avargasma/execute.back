@@ -1,28 +1,19 @@
-'use strict';
-
-//Modules
 var express = require('express');
-var app = express();
-var server = require('http').createServer(app); 
-var logger = require('morgan');
+
 var bodyParser = require('body-parser');
-var config = require("./config");   
+
+var app = express();
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 
-//Agregamos los header para permitir llamadas externas.
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-
-//Configure
-app.use(logger('dev'));
-app.use(bodyParser.json());
-
-//Routes
 
 var executeMainRoute = require('./routes/ExecuteMainRoutes');
 var connectionRoute = require('./routes/ConnectionRoutes');
@@ -30,9 +21,4 @@ var connectionRoute = require('./routes/ConnectionRoutes');
 app.use('/api/v1/executemain', executeMainRoute);
 app.use('/api/v1/connection', connectionRoute);
 
-//Init Server
-server.listen(config.app.PortServer, function () {
-  console.log('Start Server port: ' +config.app.PortServer+ '!');
-});
-
-
+module.exports = app;
