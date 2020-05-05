@@ -1,8 +1,11 @@
-var configconnection = {};
+module.exports = {
+    app:{
+        PortServer: 1000        
+    },
+    configconnection:{
 
-var security = {
-    secretkey : 'MCiozGP4QrueilFLj0uXi8erlMaEoeTO'
-};
-   
-module.exports = { configconnection, security };
- 
+    },
+    security:{
+        secretkey : 'MCiozGP4QrueilFLj0uXi8erlMaEoeTO'
+    }
+  }
