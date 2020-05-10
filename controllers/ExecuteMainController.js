@@ -1,4 +1,3 @@
-var fs = require("fs");
 const sql = require('mssql');
 
 exports.execute = (req, res, next) => {
